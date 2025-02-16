@@ -9,6 +9,7 @@ const router = express.Router();
 router.get("/", auth, async (req, res) => {
   try {
     const events = await pool.query("SELECT * FROM events WHERE user_id = $1", [req.user.id]);
+    console.log(events.rows);
     res.json(events.rows); 
   } catch (err) {
     res.status(500).json({ error: err.message });

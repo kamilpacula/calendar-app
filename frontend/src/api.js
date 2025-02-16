@@ -1,7 +1,8 @@
 const API_URL = "http://localhost:5000/api";
 
 
-export const register = async (userData) => {
+
+const register = async (userData) => {
   const res = await fetch(`${API_URL}/auth/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -10,8 +11,7 @@ export const register = async (userData) => {
   return res.json();
 };
 
-
-export const login = async (userData) => {
+const login = async (userData) => {
   const res = await fetch(`${API_URL}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -20,8 +20,7 @@ export const login = async (userData) => {
   return res.json();
 };
 
-
-export const getEvents = async (token) => {
+const getEvents = async (token) => {
   const res = await fetch(`${API_URL}/events`, {
     method: "GET",
     headers: {
@@ -29,11 +28,14 @@ export const getEvents = async (token) => {
       "Authorization": token, 
     },
   });
-  return res.json();
+  const data = await res.json();
+  if (Array.isArray(data)) {
+    return data; 
+  }
+  return []; 
 };
 
-
-export const addEvent = async (eventData, token) => {
+const addEvent = async (eventData, token) => {
   const res = await fetch(`${API_URL}/events`, {
     method: "POST",
     headers: {
@@ -45,7 +47,7 @@ export const addEvent = async (eventData, token) => {
   return res.json();
 };
 
-export const deleteEvent = async (eventId, token) => {
+const deleteEvent = async (eventId, token) => {
   const res = await fetch(`${API_URL}/events/${eventId}`, {
     method: "DELETE",
     headers: {
@@ -55,3 +57,5 @@ export const deleteEvent = async (eventId, token) => {
   });
   return res.json();
 };
+
+module.exports = { register, login, getEvents, addEvent, deleteEvent };

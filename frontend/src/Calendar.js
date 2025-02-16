@@ -15,11 +15,12 @@ function CalendarComponent() {
   useEffect(() => {
     if (token) {
       const fetchEvents = async () => {
-        const eventsData = await getEvents(token); // Pobieramy wydarzenia użytkownika
+        const eventsData = await getEvents(token); 
+        console.log(eventsData); 
         setEvents(eventsData);
         setLoading(false);
       };
-
+  
       fetchEvents();
     } else {
       setLoading(false);
@@ -40,7 +41,7 @@ function CalendarComponent() {
       };
 
       if (token) {
-        const eventData = await addEvent(newEvent, token); // Wysyłamy event do backendu
+        const eventData = await addEvent(newEvent, token); 
         setEvents([...events, eventData]);
         setEventTitle('');
         setEventDescription('');
